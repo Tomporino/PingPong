@@ -26,10 +26,11 @@ PLAYER_TWO = pygame.Rect(
                             , PLAYER_WIDTH, PLAYER_HEIGHT
                             )
 
-def draw_window(player_one):
+def draw_window(player_one, player_two):
 
     WINDOW.blit(TABLE, (0,0))
     pygame.draw.rect(WINDOW, BLACK, player_one)
+    pygame.draw.rect(WINDOW, BLACK, player_two)
 
     pygame.display.update()
 
@@ -37,6 +38,7 @@ def draw_window(player_one):
 def main():
 
     player_one = Player(PLAYER_ONE, VEL, {"Up": pygame.K_w, "Down": pygame.K_s})
+    player_two = Player(PLAYER_TWO, VEL, {"Up": pygame.K_UP, "Down": pygame.K_DOWN})
 
     run = True
     clock = pygame.time.Clock()
@@ -49,7 +51,11 @@ def main():
                 run = False
                 pygame.quit()
 
-        draw_window(player_one.player)
+        keys_pressed = pygame.key.get_pressed()
+        player_one.movement(keys_pressed, HEIGHT)
+        player_two.movement(keys_pressed, HEIGHT)
+
+        draw_window(player_one.player, player_two.player)
 
 
 
