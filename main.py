@@ -3,9 +3,13 @@ import os
 from Player import Player
 from Ball import Ball
 
+# GLOBALS
+
 FPS = 60
 
 VEL = 5
+
+# Window
 
 WIDTH, HEIGHT = 900, 500
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -16,12 +20,16 @@ TABLE = pygame.transform.scale(
             pygame.image.load(os.path.join("Assets", "pingpongtable.jpg"))
             , (WIDTH, HEIGHT))
 
+# Ball
+
 BALL_VEL = VEL + 2
 
 BALL = pygame.Rect(
                             WIDTH//2, HEIGHT//2
                             ,10, 10
 )
+
+# Player
 
 PLAYER_WIDTH, PLAYER_HEIGHT = 10, 100
 
@@ -47,6 +55,8 @@ KEY_BINDINGS = {
         }
 }
 
+# METHODS
+
 def draw_window(player_one, player_two, ball):
 
     WINDOW.blit(TABLE, (0,0))
@@ -56,6 +66,7 @@ def draw_window(player_one, player_two, ball):
 
     pygame.display.update()
 
+# Main
 
 def main():
 
@@ -69,18 +80,20 @@ def main():
     while run:
         clock.tick(FPS)
 
+        # Events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
                 pygame.quit()
 
+        # Movements
         keys_pressed = pygame.key.get_pressed()
         player_one.movement(keys_pressed, HEIGHT)
         player_two.movement(keys_pressed, HEIGHT)
         ball.movement(HEIGHT, WIDTH)
 
+        # Update Window
         draw_window(player_one.player, player_two.player, ball)
-
 
 
 if __name__ == "__main__":
