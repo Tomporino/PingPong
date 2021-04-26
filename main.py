@@ -1,6 +1,7 @@
 import pygame
 import os
 from Player import Player
+from Ball import Ball
 
 FPS = 60
 
@@ -8,11 +9,19 @@ VEL = 5
 
 WIDTH, HEIGHT = 900, 500
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("PingPong Showdown!")
 
 BLACK = (0, 0, 0)
 TABLE = pygame.transform.scale(
             pygame.image.load(os.path.join("Assets", "pingpongtable.jpg"))
             , (WIDTH, HEIGHT))
+
+BALL_VEL = VEL + 2
+
+BALL = pygame.Rect(
+                            WIDTH//2, HEIGHT//2
+                            ,10, 10
+)
 
 PLAYER_WIDTH, PLAYER_HEIGHT = 10, 100
 
@@ -38,11 +47,12 @@ KEY_BINDINGS = {
         }
 }
 
-def draw_window(player_one, player_two):
+def draw_window(player_one, player_two, ball):
 
     WINDOW.blit(TABLE, (0,0))
     pygame.draw.rect(WINDOW, BLACK, player_one)
     pygame.draw.rect(WINDOW, BLACK, player_two)
+    pygame.draw.rect(WINDOW, BLACK, ball.ball)
 
     pygame.display.update()
 
@@ -51,6 +61,7 @@ def main():
 
     player_one = Player(PLAYER_ONE, VEL, KEY_BINDINGS["player_one"])
     player_two = Player(PLAYER_TWO, VEL, KEY_BINDINGS["player_two"])
+    ball = Ball(VEL, BALL)
 
     run = True
     clock = pygame.time.Clock()
@@ -66,8 +77,9 @@ def main():
         keys_pressed = pygame.key.get_pressed()
         player_one.movement(keys_pressed, HEIGHT)
         player_two.movement(keys_pressed, HEIGHT)
+        ball.movement(HEIGHT, WIDTH)
 
-        draw_window(player_one.player, player_two.player)
+        draw_window(player_one.player, player_two.player, ball)
 
 
 
