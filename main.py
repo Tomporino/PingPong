@@ -4,7 +4,7 @@ from Player import Player
 
 FPS = 60
 
-VEL = 3
+VEL = 5
 
 WIDTH, HEIGHT = 900, 500
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -14,7 +14,7 @@ TABLE = pygame.transform.scale(
             pygame.image.load(os.path.join("Assets", "pingpongtable.jpg"))
             , (WIDTH, HEIGHT))
 
-PLAYER_WIDTH, PLAYER_HEIGHT = 10, 50
+PLAYER_WIDTH, PLAYER_HEIGHT = 10, 100
 
 PLAYER_ONE = pygame.Rect(
                             50, HEIGHT//2 + PLAYER_HEIGHT//2 #x y
@@ -25,6 +25,18 @@ PLAYER_TWO = pygame.Rect(
                             WIDTH - 50, HEIGHT//2 + PLAYER_HEIGHT//2 #x, y
                             , PLAYER_WIDTH, PLAYER_HEIGHT
                             )
+
+
+KEY_BINDINGS = {
+    "player_one": {
+        "Up": pygame.K_w, 
+        "Down": pygame.K_s
+        },
+    "player_two": {
+        "Up": pygame.K_UP, 
+        "Down": pygame.K_DOWN
+        }
+}
 
 def draw_window(player_one, player_two):
 
@@ -37,8 +49,8 @@ def draw_window(player_one, player_two):
 
 def main():
 
-    player_one = Player(PLAYER_ONE, VEL, {"Up": pygame.K_w, "Down": pygame.K_s})
-    player_two = Player(PLAYER_TWO, VEL, {"Up": pygame.K_UP, "Down": pygame.K_DOWN})
+    player_one = Player(PLAYER_ONE, VEL, KEY_BINDINGS["player_one"])
+    player_two = Player(PLAYER_TWO, VEL, KEY_BINDINGS["player_two"])
 
     run = True
     clock = pygame.time.Clock()
