@@ -44,14 +44,16 @@ PLAYER_TWO = pygame.Rect(
                             , PLAYER_WIDTH, PLAYER_HEIGHT
                         )
 
-PO_GOALLINE = pygame.Rect.Rect(
+GOALLINE_WIDTH = 10
+
+PO_GOALLINE = pygame.Rect(
                                 0, 0
-                                , 10, HEIGHT
+                                , GOALLINE_WIDTH, HEIGHT
                             )
 
-PT_GOALLINE = pygame.Rect.Rect(
-                                0, WIDTH - 10
-                                , 10, HEIGHT
+PT_GOALLINE = pygame.Rect(
+                                WIDTH - GOALLINE_WIDTH, 0
+                                , GOALLINE_WIDTH, HEIGHT
                             )
 
 KEY_BINDINGS = {
@@ -74,6 +76,7 @@ def draw_window(player_one, player_two, ball):
     pygame.draw.rect(WINDOW, BLACK, player_two)
     pygame.draw.rect(WINDOW, BLACK, ball.ball)
     pygame.draw.rect(WINDOW, RED, PO_GOALLINE)
+    pygame.draw.rect(WINDOW, RED, PT_GOALLINE)
 
     pygame.display.update()
 
@@ -101,7 +104,7 @@ def main():
         keys_pressed = pygame.key.get_pressed()
         player_one.movement(keys_pressed, HEIGHT)
         player_two.movement(keys_pressed, HEIGHT)
-        ball.movement(HEIGHT, WIDTH)
+        ball.movement(HEIGHT, WIDTH, {"player_one": player_one, "player_two": player_two})
 
         # Update Window
         draw_window(player_one.player, player_two.player, ball)

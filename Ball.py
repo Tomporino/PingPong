@@ -9,9 +9,15 @@ class Ball:
         self.ball = ball
 
 
-    def movement(self, max_height, max_width):
+    def player_collide_check(self, players):
+        if players["player_one"].player.colliderect(self.ball) or players["player_two"].player.colliderect(self.ball):
+            return True
+        return False
         
-        if self.ball.x <= 0 or self.ball.x >= max_width:
+
+    def movement(self, max_height, max_width, players):
+        
+        if self.ball.x <= 0 or self.ball.x >= max_width or self.player_collide_check(players):
             self.xDirection = -self.xDirection
         
         if self.ball.y <= 0 or self.ball.y >= max_height:
