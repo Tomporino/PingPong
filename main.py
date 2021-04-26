@@ -16,6 +16,7 @@ WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("PingPong Showdown!")
 
 BLACK = (0, 0, 0)
+RED = (255, 0, 0)
 TABLE = pygame.transform.scale(
             pygame.image.load(os.path.join("Assets", "pingpongtable.jpg"))
             , (WIDTH, HEIGHT))
@@ -41,8 +42,17 @@ PLAYER_ONE = pygame.Rect(
 PLAYER_TWO = pygame.Rect(   
                             WIDTH - 50, HEIGHT//2 + PLAYER_HEIGHT//2 #x, y
                             , PLAYER_WIDTH, PLAYER_HEIGHT
+                        )
+
+PO_GOALLINE = pygame.Rect.Rect(
+                                0, 0
+                                , 10, HEIGHT
                             )
 
+PT_GOALLINE = pygame.Rect.Rect(
+                                0, WIDTH - 10
+                                , 10, HEIGHT
+                            )
 
 KEY_BINDINGS = {
     "player_one": {
@@ -63,6 +73,7 @@ def draw_window(player_one, player_two, ball):
     pygame.draw.rect(WINDOW, BLACK, player_one)
     pygame.draw.rect(WINDOW, BLACK, player_two)
     pygame.draw.rect(WINDOW, BLACK, ball.ball)
+    pygame.draw.rect(WINDOW, RED, PO_GOALLINE)
 
     pygame.display.update()
 
